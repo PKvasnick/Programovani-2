@@ -1,5 +1,4 @@
 # Simple linked list
-# with remove and re-defined exception
 
 
 class Node:
@@ -37,68 +36,90 @@ class LinkedList:
         return " -> ".join(values)
 
     def __iter__(self):
-        """Iterator prochazejici _hodnotami_ seznamu,
+        """Iterator prochazejici polozkami seznamu,
         napr. pro pouziti v cyklu for"""
         node = self.head
         while node is not None:
-            yield node.value
+            yield node
             node = node.next
 
-    def add_first(self, node):
+    def values(self):
+        vals = []
+        for node in self:
+            vals.append(node.value)
+        return vals
+
+    def get_last_node(self):
+        for node in self:
+            pass
+        return node
+
+    def __len__(self):
+        count = 0
+        for node in self:
+            count += 1
+        return count
+
+    def add_first(self, val):
         """Prida polozku na zacatek seznamu,
         tedy na head."""
+        node = Node(val)
         node.next = self.head
         self.head = node
 
-    def add_last(self, node):
+    def add_last(self, val):
         """Prida polozku na konec seznamu."""
-        p = self.head
-        prev = None
-        while p is not None:
-            prev = p
-            p = p.next
-        prev.next = node
+        for p in self:
+            pass
+        node = Node(val)
+        p.next = node
 
-    def add_after(self, target_val, node):
-        p = self.head
-        while (p is not None) and (p.value != target_val):
-            p = p.next
-        if p is None:
-            raise ValueError(f"{target_val=} not found in list.")
+    def get_node(self, target_val):
+        for p in self:
+            if p.value == target_val:
+                return p
         else:
-            node.next = p.next
-            p.next = node
+            return None
 
-    def add_before(self, target_val, node):
-        p = self.head
-        if p.value == target_val: # hned prvni hodnota je hledana
-            node.next = p
+    def add_after(self, target_val, new_val):
+        p = self.get_node(target_val)
+        if p is None:
+            raise ValueError(f"{target_val} se nenachazi v seznamu.")
+        node = Node(new_val)
+        node.next = p.next
+        p.next = node
+
+    def add_before(self, target_val, new_val):
+        if self.head.value == target_val:
+            node = Node(new_val)
+            node.next = self.head
             self.head = node
             return
+        prev = self.head
+        p = prev.next
         while (p is not None) and (p.value != target_val):
             prev = p
             p = p.next
         if p is None:
-            raise ValueError(f"{target_val=} not found in list.")
-        else:
-            node.next = p
-            prev.next = node
+            raise ValueError(f"{target_val} se nenachazi v seznamu.")
+        node = Node(new_val)
+        node.next = p
+        prev.next = node
 
-    def remove_node(self, target_node_value):
-        if self.head is None:
-            raise ValueError("List is empty")
-
-        if self.head.value == target_node_value:
-            self.head = self.head.next
+    def remove(self, target_val):
+        p = self.head
+        if p.value == target_val:
+            self.head = p.next
+            del p
             return
-
-        previous_node = self.head
-        p = self.head.next
-        while (p is not None) and (p.value != target_node_value):
+        prev = p
+        p = p.next
+        while (p is not None) and (p.value != target_val):
             prev = p
             p = p.next
         if p is None:
-            raise ValueError("Node with value '%s' not found" % target_node_value)
+            raise ValueError(f"{target_val} se nenachazi v seznamu.")
         prev.next = p.next
         del p
+
 
