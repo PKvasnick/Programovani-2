@@ -53,11 +53,12 @@ class Node:
         return bf_list
 
 
-def construct_from_list(values: list[int]) -> Node:
+def tree_from_list(values: list[int]) -> Node:
     values = [0] + values
     queue = deque()
     index = 1
     tree = Node(values[index])
+    print(index)
     index += 1
     queue.append(tree)
     while index < len(values):
@@ -67,13 +68,13 @@ def construct_from_list(values: list[int]) -> Node:
         print(index)
         index += 1
         queue.append(node.left)
-        if index < len(values):
-            node.right = Node(values[index])
-            print(index)
-            index += 1
-            queue.append(node.right)
-        else:
+        if index == len(values):
             node.right = None
+            break
+        node.right = Node(values[index])
+        print(index)
+        index += 1
+        queue.append(node.right)
     return tree
 
 
@@ -94,7 +95,7 @@ def main() -> None:
 
     print(tree.to_string())
     values = tree.to_list_breadth_first()
-    tree2 = construct_from_list(values)
+    tree2 = tree_from_list(values)
     print(tree2.to_string())
 
 
