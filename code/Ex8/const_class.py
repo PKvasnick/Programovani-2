@@ -11,10 +11,11 @@ class ConstClass:
     E: float = 2.7183
 
 
-def main() -> None:
-    print(ConstClass.PI, ConstClass.E) # No need to create instance
-    ConstClass.PI = 42 # dataclasses.FrozenInstanceError: cannot assign to field 'PI'
+ConstClass.EULER_GAMMA = 0.57722 # Can add attributes to class
+ConstClass.E = 2.71828 # Can modify class attributes
+
+const = ConstClass()   # Instances are frozen - no adding/modifying
+print(const.PI, const.E)
 
 
-if __name__ == "__main__":
-    main()
+const.PI = 42 # dataclasses.FrozenInstanceError: cannot assign to field 'PI'
