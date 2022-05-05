@@ -42,18 +42,18 @@ class Node:
     def to_list_inorder(self):
         flat_list = []
         if self.left is not None:
-            flat_list.extend(self.left.to_list_preorder())
+            flat_list.extend(self.left.to_list_inorder())
         flat_list.append(self.value)
         if self.right is not None:
-            flat_list.extend(self.right.to_list_preorder())
+            flat_list.extend(self.right.to_list_inorder())
         return flat_list
 
     def to_list_postorder(self):
         flat_list = []
         if self.left is not None:
-            flat_list.extend(self.left.to_list_preorder())
+            flat_list.extend(self.left.to_list_postorder())
         if self.right is not None:
-            flat_list.extend(self.right.to_list_preorder())
+            flat_list.extend(self.right.to_list_postorder())
         flat_list.append(self.value)
         return flat_list
 
