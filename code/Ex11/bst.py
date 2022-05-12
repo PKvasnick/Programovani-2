@@ -79,20 +79,17 @@ class BSTnode:
 
 
 def main() -> None:
-    vals = [3, 6, 5, 2, 1, 8, 4, 9, 7, 0]
-    tree = BSTnode(vals.pop())
+    vals = [0,1,2,3,4,5,6,7,8,9]
+    tree = BSTnode(vals.pop(0))
     for val in vals:
         tree.insert(val)
     print(tree)
     print(tree.to_list_inorder())
-    print(tree.find(11))
     print(tree.depth())
     print(tree.asymmetry())
     tree = tree.rotate()
     print(tree)
-    print(tree.depth())
     print(tree.asymmetry())
-    print(tree.to_list_inorder())
 
 
 if __name__ == '__main__':
