@@ -88,12 +88,21 @@ class Graph:
 
 
 def main() -> None:
-    g = Graph(4)
-    g.add_edge(0, 1, 10)
-    g.add_edge(0, 2, 6)
-    g.add_edge(0, 3, 5)
-    g.add_edge(1, 3, 15)
-    g.add_edge(2, 3, 4)
+    g = Graph(9)
+    g.add_edge(0, 1, 4)
+    g.add_edge(0, 7, 8)
+    g.add_edge(1, 7, 11)
+    g.add_edge(1, 2, 8)
+    g.add_edge(2, 3, 7)
+    g.add_edge(2, 8, 2)
+    g.add_edge(8, 7, 7)
+    g.add_edge(8, 6, 6)
+    g.add_edge(6, 5, 2)
+    g.add_edge(7, 6, 1)
+    g.add_edge(2, 5, 4)
+    g.add_edge(3, 4, 9)
+    g.add_edge(3, 5, 14)
+    g.add_edge(4, 5, 10)
 
     g.kruskal_mst()
 
