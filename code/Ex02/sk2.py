@@ -18,7 +18,7 @@ class CaseInsensitiveSet:
     def __str__(self):
         return str(self.set)
 
-    
+
 
 print("Vytvoř:")
 s = CaseInsensitiveSet()
