@@ -1,19 +1,7 @@
-from random import randint
+from bisect import bisect_left, bisect_right
 
+data = [0, 11, 22, 33, 33, 44, 55, 55, 55]
 
-def bubble_sort(b):
-    for i in range(len(b)):
-        n_swaps = 0
-        for j in range(len(b)-i-1):
-            if b[j] > b[j+1]:
-                b[j], b[j+1] = b[j+1], b[j]
-                n_swaps += 1
-        if n_swaps == 0:
-            break
-    return b
-
-
-data = [randint(1,100) for _ in range(10)]
-
-print(data)
-print(bubble_sort(data))
+for i in range(7):
+    k = 10*i + i
+    print(k, bisect_right(data, k) - bisect_left(data,k))
