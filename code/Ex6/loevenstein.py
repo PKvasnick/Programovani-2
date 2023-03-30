@@ -9,9 +9,8 @@ def counted(f):
     inner.calls = 0 # zřizujeme atribut funkce inner
     return(inner)
 
-
 @counted
-@lru_cache(maxsize=1000)
+@lru_cache(maxsize=100)
 def lev(s:str, t:str) -> int:
     """Finds Levenshtein (edit) distance between two strings"""
     if (not s) or (not t):
