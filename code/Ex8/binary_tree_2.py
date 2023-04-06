@@ -21,10 +21,10 @@ class Node:
         while len(stack)>0:
             node = stack.pop()
             df_list.append(node.value)
-            if node.left:
-                stack.append(node.left)
             if node.right:
                 stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
             print(stack)
         return df_list
 

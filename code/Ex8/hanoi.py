@@ -12,4 +12,4 @@ def move(n: int, start: str, end: str, via: str) -> None:
 
 
 if __name__ == '__main__':
-    move(5, "A", "B", "C")
+    move(3, "A", "B", "C")

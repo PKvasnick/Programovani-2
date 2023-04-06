@@ -8,10 +8,11 @@ class Node:
         self.right = right
 
     def to_string(self, level = 0):
+        TABS = "    "
         strings = []
         if self.left is not None:
             strings.append(self.left.to_string(level + 1))
-        strings.append(' ' * 4 * level + '-> ' + str(self.value))
+        strings.append(TABS * level + '-> ' + str(self.value))
         if self.right is not None:
             strings.append(self.right.to_string(level + 1))
         return "\n".join(strings)
