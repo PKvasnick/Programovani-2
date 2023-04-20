@@ -1,57 +1,96 @@
-# A simple Sudoku solver
-import sys
+# Simple binary tree class with RECURSIVE methods
+from collections import deque
 
-grid = [[5, 3, 0, 0, 7, 0, 0, 0, 0],
-        [6, 0, 0, 1, 9, 5, 0, 0, 0],
-        [0, 9, 8, 0, 0, 0, 0, 6, 0],
-        [8, 0, 0, 0, 6, 0, 0, 0, 3],
-        [4, 0, 0, 8, 0, 3, 0, 0, 1],
-        [7, 0, 0, 0, 0, 0, 0, 0, 6],
-        [0, 6, 0, 0, 0, 0, 2, 8, 0],
-        [0, 0, 0, 4, 1, 9, 0, 0, 5],
-        [0, 0, 0, 0, 8, 0, 0, 7, 9]
-        ]
+class Node:
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+    def to_string(self, level = 0):
+        TABS = "    "
+        strings = []
+        if self.left is not None:
+            strings.append(self.left.to_string(level + 1))
+        strings.append(TABS * level + '-> ' + str(self.value))
+        if self.right is not None:
+            strings.append(self.right.to_string(level + 1))
+        return "\n".join(strings)
+
+    def __str__(self):
+        return self.to_string()
+
+    def to_dict(self):
+        repr_dict = {
+            "value" : self.value,
+            "left" : self.left.to_dict() if self.left is not None else None,
+            "right" : self.right.to_dict() if self.right is not None else None
+        }
+        return repr_dict
+
+    def __repr__(self):
+        return str(self.value)
+
+    def to_list_depth_first(self):
+        stack = deque()
+        values = []
+        stack.append(self)
+        while stack:
+            print(stack)
+            node = stack.pop()
+            values.append(node.value)
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+        return values
+
+    def to_list_breadth_first(self):
+        queue = deque()
+        values = []
+        queue.append(self)
+        while queue:
+            print(queue)
+            node = queue.popleft()
+            values.append(node.value)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return values
+
+    def to_list_preorder_gen(self):
+        stack = [self]
+        while stack:
+            node = stack.pop()
+            yield node.value
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+        return
 
 
-def print_grid() -> None:
-    global grid
-    for row in grid:
-        print(*row)
+
+def main() -> None:
+    tree = Node(
+        5,
+        Node(
+            6,
+            Node(7),
+            Node(8)
+        ),
+        Node(
+            4,
+            Node(5),
+            Node(2)
+        )
+    )
+    print(tree)
+    print(tree.to_list_depth_first())
+    print(tree.to_list_breadth_first())
+    print(list(tree.to_list_preorder_gen()))
 
 
-def is_admissible(x: int, y: int, digit: int) -> bool:
-    global grid
-    for col in range(len(grid)):
-        if grid[x][col] == digit:
-            return False
-    for row in range(len(grid)):
-        if grid[row][y] == digit:
-            return False
-    x0 = (x // 3) * 3
-    y0 = (y // 3) * 3
-    for ix in range(3):
-        for iy in range(3):
-            if grid[x0 + ix][y0 + iy] == digit:
-                return False
-    return True
-
-
-def solve() -> None:
-    global grid
-    for x in range(len(grid)):
-        for y in range(len(grid)):
-            if grid[x][y] == 0:
-                for digit in range(1, 10):
-                    if is_admissible(x, y, digit):
-                        grid[x][y] = digit
-                        solve()
-                        grid[x][y] = 0
-                return
-    print_grid()
-    c = input("Continue?")
-    return
-
-
-print_grid()
-print("Solution:")
-solve()
+if __name__ == '__main__':
+    main()
