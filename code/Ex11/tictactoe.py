@@ -83,7 +83,7 @@ class Choice:
 
 
 def minmax(node):
-    aggresivity = 1.0
+    aggresivity = 0.8
     if not node.children:
         return Choice("end", node.score)
 
