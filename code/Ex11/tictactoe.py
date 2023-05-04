@@ -83,6 +83,7 @@ class Choice:
 
 
 def minmax(node):
+    aggresivity = 1.0
     if not node.children:
         return Choice("end", node.score)
 
@@ -90,11 +91,11 @@ def minmax(node):
     if node.player == 0:
         max_result = max(c.value for c in choices)
         max_choices = [i for i in range(len(node.children)) if choices[i].value == max_result]
-        return Choice(max_choices, max_result)
+        return Choice(max_choices, aggresivity * max_result)
     else:
         min_result = min(c.value for c in choices)
         min_choices = [i for i in range(len(node.children)) if choices[i].value == min_result]
-        return Choice(min_choices, min_result)
+        return Choice(min_choices, aggresivity * min_result)
 
 
 def play(start_grid = empty_grid):

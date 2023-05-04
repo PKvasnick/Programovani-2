@@ -15,6 +15,9 @@ class Constant(Node):
     def derivative(self, by):
         return Constant(0)
 
+    def prune(self):
+        return self
+
 
 class Variable(Node):
     def __init__(self, name):
@@ -31,6 +34,16 @@ class Variable(Node):
             return Constant(1)
         else:
             return Constant(0)
+
+    def prune(self):
+        return self
+
+def is_zero_constant(node):
+    return isinstance(node, Constant) and node.value == 0
+
+def is_unit_constant(node):
+    return isinstance(node, Constant) and node.value == 1
+
 
 
 class Plus(Node):
@@ -49,6 +62,17 @@ class Plus(Node):
             self.left.derivative(by),
             self.right.derivative(by)
         )
+
+    def prune(self):
+        if self.left: self.left = self.left.prune()
+        if self.right: self.right = self.right.prune()
+        if self.left and is_zero_constant(self.left):
+            if self.right and is_zero_constant(self.right):
+                return Constant(0)
+            else:
+                return self.right
+        if self.right and is_zero_constant(self.right):
+            return self.left
 
 
 class Times(Node):
@@ -73,6 +97,20 @@ class Times(Node):
                 self.right.derivative(by)
             )
         )
+
+    def prune(self):
+        self.left = self.left.prune()
+        self.right = self.right.prune()
+        if is_zero_constant(self.left) | is_zero_constant(self.right):
+            return Constant(0)
+        if is_unit_constant(self.left):
+            if is_unit_constant(self.right):
+                return Constant(1)
+            else:
+                return self.right
+        if is_unit_constant(self.right):
+            return self.left
+        return self
 
 
 def main() -> None:
