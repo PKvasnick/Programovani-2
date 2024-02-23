@@ -26,7 +26,7 @@ def lcs(s1:str, s2:str) -> int:
 
 def main() -> None:
     global datasets
-    s1, s2 = datasets[0]
+    s1, s2 = datasets[2]
     maxlen = lcs(s1, s2)
     print(maxlen)
 
