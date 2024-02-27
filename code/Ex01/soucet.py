@@ -8,17 +8,17 @@ if a > b:
 a = list(reversed(a))
 b = list(reversed(b))
 
-prebytek = 0
+prenos = 0
 c = []
 for i in range(len(a)):
-    vysledek = a[i] + b[i] + prebytek
+    vysledek = a[i] + b[i] + prenos
     c.append(vysledek % 10)
-    prebytek = vysledek // 10
+    prenos = vysledek // 10
     
 if (len(b) > len(a)):
-    c.append(prebytek + b[len(a)])
-elif (prebytek > 0):
-    c.append(prebytek)
+    c.append(prenos + b[len(a)])
+elif (prenos > 0):
+    c.append(prenos)
 
 for i in range(len(a) + 1, len(b)):
     c.append(b[i])

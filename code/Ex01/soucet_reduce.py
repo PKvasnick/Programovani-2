@@ -1,40 +1,28 @@
-import sys
 from functools import reduce
 
-a0 = input()
-b0 = input()
-
-if (not a0.isdigit()) or (not b0.isdigit()):
-    print("Ocekavaji se cela cisla!")
-    sys.exit()
+a0 = [int(c) for c in input()]
+b0 = [int(c) for c in input()]
 
 delka = max(len(a0), len(b0)) + 1
 a0 = a0.zfill(delka)
 b0 = b0.zfill(delka)
 
-a = [int(d) for d in reversed(a0)]
-b = [int(d) for d in reversed(b0)]
 
-def transform(state, pair):
-    '''Transformuje stav state = (prenos, vysledek) pomoci novych cislic
-    (d1, d2) na novy stav'''
-    soucet = (pair[0] + pair[1] + state[0]) % 10
-    state[1].append(soucet)
-    prenos = (pair[0] + pair[1] + state[0]) // 10
-    return prenos, state[1]
+def transform(stav, cislice):
+    seznam, prenos = stav
+    soucet = cislice[0] + cislice[1] + prenos
+    seznam.append(soucet % 10)
+    prenos = soucet // 10
+    return seznam, prenos
 
 
-prenos, soucet = reduce(transform, zip(a, b), (0, []))
+rev_soucet, prenos = reduce(transform, zip(reversed(a0), reversed(b0)), ([], 0))
 
-assert(prenos == 0)
+assert (prenos == 0)
 
-konecna_delka = len(soucet)
-while soucet[konecna_delka - 1] == 0:
-    konecna_delka -= 1
+if rev_soucet[-1] == 0:
+    rev_soucet.pop()
 
-print(*reversed(soucet[:konecna_delka]), sep = "")
-
-# Kontrola
+print(*reversed(rev_soucet), sep="")
+print("Kontrola:")
 print(int(a0) + int(b0))
-
-
