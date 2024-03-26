@@ -27,6 +27,6 @@ def lev(s:str, t:str) -> int:
 s = "Démon kýs škaredý, chvost vlečúc po zemi"
 t = "ko mne sa priplazil, do ucha šepce mi:"
 
-k = 30
+k = 12
 
 print(lev(s[:k],t[:k]), lev.calls)
