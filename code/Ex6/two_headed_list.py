@@ -6,6 +6,7 @@ class Node:
         """Polozku inicializujeme hodnotou value"""
         self.value = value
         self.next = None
+        self.prev = None
 
     def __repr__(self):
         """Reprezentace objektu na Pythonovske konzoli"""
@@ -13,29 +14,30 @@ class Node:
 
 
 class TwoHeadedList:
-    def __init__(self, values = None):
+    def __init__(self, values=None):
         """Spojovany seznam volitelne inicializujeme seznamem hodnot"""
         if values is None:
             self.head = None
+            self.tail = None
             return
-        self.head = Node(values.pop(0)) # pop vrati a odstrani hodnotu z values
+        self.head = Node(values.pop(0))  # pop vrati a odstrani hodnotu z values
         node = self.head
         for value in values:
             node.next = Node(value)
+            node.next.prev = node
             node = node.next
         self.tail = node
-
 
     def __repr__(self):
         """Reprezentace na Pythonovske konzoli:
         Hodnoty spojene sipkami a na konci None"""
-        values = []
+        values = ["None"]
         node = self.head
         while node is not None:
             values.append(str(node.value))
             node = node.next
         values.append("None")
-        return " -> ".join(values)
+        return " <-> ".join(values)
 
     def __iter__(self):
         """Iterator prochazejici _hodnotami_ seznamu,
@@ -51,13 +53,47 @@ class TwoHeadedList:
             vals.append(node.value)
         return vals
 
-    def get_last_node(self):
-        for node in self:
-            pass
-        return node
+    def append(self, value):
+        """Append value to head"""
+        node = Node(value)
+        node.next = self.head
+        if self.head:
+            self.head.prev = node
+        self.head = node
+        if not self.tail:
+            self.tail = node
 
-    def reset_tail(self):
-        self.tail = self.get_last_node()
+    def appendleft(self, value: int):
+        """Append value to tail"""
+        node = Node(value)
+        node.prev = self.tail
+        if self.tail:
+            self.tail.next = node
+        self.tail = node
+        if not self.head:
+            self.head = node
+
+    def pop(self) -> int:
+        """Pop from head side"""
+        result = None
+        if self.head:
+            result = self.head.value
+            self.head = self.head.next
+            if not self.head:
+                self.tail = None
+        return result
+
+    def popleft(self) -> int:
+        """Pop from tail side"""
+        result = None
+        if self.tail:
+            result = self.tail.value
+            self.tail = self.tail.prev
+            if not self.tail:
+                self.head = None
+            else:
+                self.tail.next = None
+        return result
 
     def __len__(self):
         count = 0
@@ -65,66 +101,23 @@ class TwoHeadedList:
             count += 1
         return count
 
-    def add_first(self, val):
-        """Prida polozku na zacatek seznamu,
-        tedy na head."""
-        node = Node(val)
-        node.next = self.head
-        self.head = node
 
-    def add_last(self, val):
-        """Prida polozku na konec seznamu."""
-        self.tail.next = Node(val)
-        self.tail = self.tail.next
+from random import randint
 
-    def get_node(self, target_val):
-        for p in self:
-            if p.value == target_val:
-                return p
-        else:
-            return None
-
-    def add_after(self, target_val, new_val):
-        p = self.get_node(target_val)
-        if p is None:
-            raise ValueError(f"{target_val} se nenachazi v seznamu.")
-        node = Node(new_val)
-        node.next = p.next
-        p.next = node
-        self.reset_tail()
-
-    def add_before(self, target_val, new_val):
-        if self.head.value == target_val:
-            node = Node(new_val)
-            node.next = self.head
-            self.head = node
-            return
-        prev = self.head
-        p = prev.next
-        while (p is not None) and (p.value != target_val):
-            prev = p
-            p = p.next
-        if p is None:
-            raise ValueError(f"{target_val} se nenachazi v seznamu.")
-        node = Node(new_val)
-        node.next = p
-        prev.next = node
-
-    def remove(self, target_val):
-        p = self.head
-        if p.value == target_val:
-            self.head = p.next
-            del p
-            return
-        prev = p
-        p = p.next
-        while (p is not None) and (p.value != target_val):
-            prev = p
-            p = p.next
-        if p is None:
-            raise ValueError(f"{target_val} se nenachazi v seznamu.")
-        prev.next = p.next
-        del p
-        self.reset_tail()
+def main() -> None:
+    values = [randint(1,10) for _ in range(10)]
+    print(values)
+    queue = TwoHeadedList(values)
+    print(queue)
+    queue.appendleft(20)
+    print(queue)
+    queue.popleft()
+    print(queue)
+    queue.append(30)
+    print(queue)
+    queue.pop()
+    print(queue)
 
 
+if __name__ == "__main__":
+    main()
