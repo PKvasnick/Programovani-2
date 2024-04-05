@@ -51,7 +51,7 @@ def heap_sort(h: list[int]) -> None:
 
 
 def main() -> None:
-    heap = [randint(1,100) for _ in range(15)]
+    heap = [randint(1,100) for _ in range(10)]
     print(heap)
     heapify(heap)
     print(heap)
