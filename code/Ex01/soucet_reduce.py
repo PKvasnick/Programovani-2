@@ -1,28 +1,39 @@
-from functools import reduce
-
-a0 = [int(c) for c in input()]
-b0 = [int(c) for c in input()]
-
-delka = max(len(a0), len(b0)) + 1
-a0 = a0.zfill(delka)
-b0 = b0.zfill(delka)
+from itertools import zip_longest
+from itertools import accumulate
 
 
-def transform(stav, cislice):
-    seznam, prenos = stav
-    soucet = cislice[0] + cislice[1] + prenos
-    seznam.append(soucet % 10)
-    prenos = soucet // 10
-    return seznam, prenos
+def sum_by_digits(a : list[int], b : list[int]) -> list[int]:
+    '''
+    Sums two integers given as lists of digits.
+    :param a: list of digits of the first number
+    :param b: list of digits of the second number
+    :return: list of digits of the sum
+    '''
+    a.reverse()     # this is cheap for lists, but causes side effect
+    b.reverse()
+    tuples = list(accumulate(zip_longest(a, b, fillvalue=0), func=add_and_carry, initial=(0,0)))
+    tuples.reverse()
+    tuples.pop()    # remove initial state
+    carry = tuples[0][1]
+    result = [carry] if carry != 0 else []
+    result += [u for u, v in tuples]
+    a.reverse()     # correct side effect!
+    b.reverse()
+    return result
 
 
-rev_soucet, prenos = reduce(transform, zip(reversed(a0), reversed(b0)), ([], 0))
+def main() -> None:
+    a0 = [int(c) for c in input()]
+    b0 = [int(c) for c in input()]
+    print("First number: ", *a0, sep = "")
+    print("Second number: ",*b0, sep = "")
+    digit_sum = sum_by_digits(a0, b0)
+    print(*digit_sum, sep="")
+    print("Kontrola:")
+    a0_int = int("".join([str(d) for d in a0]))
+    b0_int = int("".join([str(d) for d in b0]))
+    print(a0_int + b0_int)
 
-assert (prenos == 0)
 
-if rev_soucet[-1] == 0:
-    rev_soucet.pop()
-
-print(*reversed(rev_soucet), sep="")
-print("Kontrola:")
-print(int(a0) + int(b0))
+if __name__ == "__main__":
+    main()

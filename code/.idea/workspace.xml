@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9103b42c-6d08-4ae1-9d15-72ebed9ca4d6" name="Changes" comment="Ex08&#10;Inorder and postorder non-recursive traversal, const class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Ex01/soucet_reduce.py" beforeDir="false" afterPath="$PROJECT_DIR$/Ex01/soucet_reduce.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +49,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.min_heap.executor": "Run",
+    "Python.soucet_reduce.executor": "Run",
     "Python.two_headed_list.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -60,6 +62,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.sync",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -72,12 +75,13 @@
       <recent name="C:\Users\kvasn\Documents\GitHub\Programovani-2\code\Ex8" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kvasn\Documents\GitHub\Programovani-2\code\Ex02" />
       <recent name="C:\Users\kvasn\Documents\GitHub\Programovani-2\code\Ex9" />
       <recent name="C:\Users\kvasn\Documents\GitHub\Programovani-2\code\Ex12" />
       <recent name="C:\Users\kvasn\Documents\GitHub\Programovani-2\code\Ex6" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.two_headed_list">
+  <component name="RunManager" selected="Python.soucet_reduce">
     <configuration name="heapsort" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="code" />
       <option name="ENV_FILES" value="" />
@@ -147,7 +151,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="lcs" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="soucet_reduce" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="code" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -156,12 +160,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Ex13" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Ex01" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Ex13/lcs.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Ex01/soucet_reduce.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -195,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.soucet_reduce" />
         <item itemvalue="Python.two_headed_list" />
         <item itemvalue="Python.heapsort" />
         <item itemvalue="Python.knapsack_dp" />
         <item itemvalue="Python.knapsack_recursive" />
-        <item itemvalue="Python.lcs" />
       </list>
     </recent_temporary>
   </component>
@@ -219,7 +223,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1648068165504</updated>
-      <workItem from="1740367855312" duration="593000" />
+      <workItem from="1740367855312" duration="5575000" />
     </task>
     <task id="LOCAL-00001" summary="Ex08&#10;Inorder and postorder non-recursive traversal, const class">
       <created>1680769034787</created>
@@ -259,5 +263,8 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/code$soucet_reduce.coverage" NAME="soucet_reduce Coverage Results" MODIFIED="1740413751967" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Ex01" />
   </component>
 </project>
