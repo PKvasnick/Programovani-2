@@ -1,5 +1,4 @@
-from itertools import zip_longest
-from itertools import accumulate
+from itertools import accumulate, zip_longest
 
 
 def add_and_carry(accumulator: tuple[int, int], digits: tuple[int, int]) -> tuple[int, int]:
@@ -15,23 +14,21 @@ def add_and_carry(accumulator: tuple[int, int], digits: tuple[int, int]) -> tupl
     return new_sum % 10, new_sum // 10
 
 
-def sum_by_digits(a : list[int], b : list[int]) -> list[int]:
+def sum_by_digits(a0: list[int], b0: list[int]) -> list[int]:
     """
     Sums two integers given as lists of digits.
-    :param a: list of digits of the first number
-    :param b: list of digits of the second number
+    :param a0: list of digits of the first number
+    :param b0: list of digits of the second number
     :return: list of digits of the sum
     """
-    a.reverse()     # this is cheap for lists, but causes side effect
-    b.reverse()
+    a = a0.copy()     # to protect from side effects
+    b = b0.copy()
     tuples = list(accumulate(zip_longest(a, b, fillvalue=0), func=add_and_carry, initial=(0,0)))
     tuples.reverse()
     tuples.pop()    # remove initial state
     carry = tuples[0][1]
     result = [carry] if carry != 0 else []
     result += [u for u, v in tuples]
-    a.reverse()     # correct side effect!
-    b.reverse()
     return result
 
 
