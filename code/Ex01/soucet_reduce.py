@@ -2,13 +2,26 @@ from itertools import zip_longest
 from itertools import accumulate
 
 
+def add_and_carry(accumulator: tuple[int, int], digits: tuple[int, int]) -> tuple[int, int]:
+    """
+    Adds two digits and carry, returns the sum and the carry.
+    :param accumulator: tuple of the current sum and carry
+    :param digits: tuple of the digits to be added
+    :return: tuple of the new sum and carry
+    """
+    old_sum, carry = accumulator
+    a, b = digits
+    new_sum = a + b + carry
+    return new_sum % 10, new_sum // 10
+
+
 def sum_by_digits(a : list[int], b : list[int]) -> list[int]:
-    '''
+    """
     Sums two integers given as lists of digits.
     :param a: list of digits of the first number
     :param b: list of digits of the second number
     :return: list of digits of the sum
-    '''
+    """
     a.reverse()     # this is cheap for lists, but causes side effect
     b.reverse()
     tuples = list(accumulate(zip_longest(a, b, fillvalue=0), func=add_and_carry, initial=(0,0)))
@@ -23,6 +36,9 @@ def sum_by_digits(a : list[int], b : list[int]) -> list[int]:
 
 
 def main() -> None:
+    """
+    Demonstrates the sum_by_digits function.
+    """
     a0 = [int(c) for c in input()]
     b0 = [int(c) for c in input()]
     print("First number: ", *a0, sep = "")
