@@ -1,16 +1,17 @@
-from functools import cache, lru_cache
+from functools import wraps, lru_cache
 
 
 # Dekorátor, počítající počet volání funkce
 def counted(f):
-    def inner(s, t):
+    @wraps(f)
+    def inner(*args, **kwargs):
         inner.calls += 1 # inkrementujeme atribut
-        return f(s, t)
+        return f(*args, **kwargs)
     inner.calls = 0 # zřizujeme atribut funkce inner
     return(inner)
 
 @counted
-@lru_cache(maxsize=100)
+@lru_cache(maxsize=1000)
 def lev(s:str, t:str) -> int:
     """Finds Levenshtein (edit) distance between two strings"""
     if (not s) or (not t):
@@ -27,6 +28,5 @@ def lev(s:str, t:str) -> int:
 s = "Démon kýs škaredý, chvost vlečúc po zemi"
 t = "ko mne sa priplazil, do ucha šepce mi:"
 
-k = 12
-
+k = max(len(s), len(t))
 print(lev(s[:k],t[:k]), lev.calls)
