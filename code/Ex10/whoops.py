@@ -1,7 +1,13 @@
-def whoops():
+def divide(x, y):
+    print('entering divide')
     try:
-        return True
+        print(x/y)
+    except ZeroDivisionError:
+        print('error')
+    else:
+        print('no error')
     finally:
-        return False
+        print('exit')
 
-print(whoops())
+divide(1, 1)
+divide(1, 0)
