@@ -3,15 +3,15 @@ from itertools import accumulate, zip_longest
 
 def add_and_carry(accumulator: tuple[int, int], digits: tuple[int, int]) -> tuple[int, int]:
     """
-    Adds two digits and carry, returns the sum and the carry.
-    :param accumulator: tuple of the current sum and carry
-    :param digits: tuple of the digits to be added
-    :return: tuple of the new sum and carry
+    Přičte součet dvou dalších číslic a přenosu, vrací aktualizovaný součet a přenos.
+    :param accumulator: tuple of the running sum and carry
+    :param digits: tuple of two new digits to add
+    :return: tuple of updated sum and carry
     """
-    old_sum, carry = accumulator
+    carry, old_sum = accumulator
     a, b = digits
     new_sum = a + b + carry
-    return new_sum % 10, new_sum // 10
+    return divmod(new_sum, 10)  # returns (carry, digit_sum)
 
 
 def sum_by_digits(a0: list[int], b0: list[int]) -> list[int]:
@@ -26,9 +26,9 @@ def sum_by_digits(a0: list[int], b0: list[int]) -> list[int]:
     tuples = list(accumulate(zip_longest(a, b, fillvalue=0), func=add_and_carry, initial=(0,0)))
     tuples.reverse()
     tuples.pop()    # remove initial state
-    carry = tuples[0][1]
+    carry = tuples[0][0]
     result = [carry] if carry != 0 else []
-    result += [u for u, v in tuples]
+    result += [v for u, v in tuples]
     return result
 
 
