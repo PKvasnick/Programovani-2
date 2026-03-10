@@ -3,10 +3,13 @@
 
 
 class Matrix:
-    def __init__(self, rows, cols, value=0):
+    def __init__(self, rows, cols, data=None):
         self.rows = rows
         self.cols = cols
-        self.data = [0] * (rows * cols)
+        if data is not None:
+            self.data = data
+        else:
+            self.data = [0] * (rows * cols)
 
     def __getitem__(self, index):
         row, col = index
@@ -42,7 +45,7 @@ class Matrix:
             raise ValueError("Matrices must have the same dimensions")
         result = Matrix(self.rows, self.cols)
         for i in range(self.rows * self.cols):
-            result.data[i] = self.data[i] + other.data[i]
+            result.data[i] = self.data[i] - other.data[i]
         return result
 
     def __mul__(self, other):
