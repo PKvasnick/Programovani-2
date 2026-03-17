@@ -1,15 +1,16 @@
 from random import randint
 
-def count_sort(b:list[int], rmax: int) -> list[int]:
-    bins = [0] * rmax	# vytvoříme přihrádky
+
+def count_sort(b: list[int], rmax: int) -> list[int]:
+    bins = [0] * rmax  # vytvoříme přihrádky
     # roztřídíme
-    for elem in b:		
+    for elem in b:
         bins[elem] += 1
+    print(*bins)
     # kumulativní součty obsazeností
-    for i in range(rmax):	
-        if i==0:
-            continue
-        bins[i] += bins[i-1]
+    for i in range(1, rmax):
+        bins[i] += bins[i - 1]
+    print(*bins)
     # naplníme výsledné pole
     output = [0] * len(b)
     for i in reversed(range(len(b))):
@@ -20,7 +21,7 @@ def count_sort(b:list[int], rmax: int) -> list[int]:
 
 
 r = 10
-data = [randint(0,r-1) for _ in range(100)]
+data = [randint(0, r - 1) for _ in range(100)]
 
 print(*data)
 print(*count_sort(data, r))
