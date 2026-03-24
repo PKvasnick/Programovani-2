@@ -1,33 +1,35 @@
-# simplistic heap implementation
+# simplistic heap implementation, indexing from 0, max-heap for sorting
+# no doctests, they are confused by informative printouts
 from random import randint
 
 
 def print_heap(h: list[int], size: int) -> None:
-    """Infix printout"""
+    """Prints the heap tree"""
+
     def to_string(h: list[int], index: int, size: int, level: int) -> list[str]:
         rows = []
-        if (child := 2*index + 1) < size:
+        if (child := 2 * index + 1) < size:
             rows.extend(to_string(h, child, size, level + 1))
-        rows.append(f"{' '*(level * 4)} -- {h[index]}")
-        if (child := 2*index + 2) < size:
+        rows.append(f"{' ' * (level * 4)} -- {h[index]}")
+        if (child := 2 * index + 2) < size:
             rows.extend(to_string(h, child, size, level + 1))
         return rows
 
     print("\n".join(to_string(h, 0, size, 0)))
 
 
-def heapify(h:list[int]) -> None:
+def heapify(h: list[int]) -> None:
     """Turn a list into a max-heap in-place"""
     for element in range(len(h)):
         p = element
-        while (prev := (p-1) // 2) >= 0:
+        while (prev := (p - 1) // 2) >= 0:
             if h[p] > h[prev]:
                 h[p], h[prev] = h[prev], h[p]
                 p = prev
             else:
                 break
-        print_heap(h, element+1)
-        print(h[element+1:])
+        print_heap(h, element + 1)
+        print(h[: element + 1], " ", h[element + 1 :])
 
 
 def heap_sort(h: list[int]) -> None:
@@ -47,11 +49,11 @@ def heap_sort(h: list[int]) -> None:
             h[p], h[p_child] = h[p_child], h[p]
             p = p_child
         print_heap(h, heap_size)
-        print(h[heap_size:])
+        print(h[:heap_size], " ", h[heap_size:])
 
 
 def main() -> None:
-    heap = [randint(1,100) for _ in range(10)]
+    heap = [randint(1, 100) for _ in range(10)]
     print(heap)
     heapify(heap)
     print(heap)
@@ -59,5 +61,5 @@ def main() -> None:
     print(heap)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
