@@ -1,6 +1,5 @@
 # Build inverse interpolation table using a headless simply linked list
 
-import matplotlib
 from matplotlib import pyplot as plt
 
 
