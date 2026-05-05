@@ -1,11 +1,20 @@
-from collections import deque
 import random
+from collections import deque
 
 INFINITY = 1
-MINUS_INFINITY = - INFINITY
+MINUS_INFINITY = -INFINITY
 
 empty_grid = ["."] * 9
-triples = [{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}]
+triples = [
+    {0, 1, 2},
+    {3, 4, 5},
+    {6, 7, 8},
+    {0, 3, 6},
+    {1, 4, 7},
+    {2, 5, 8},
+    {0, 4, 8},
+    {2, 4, 6},
+]
 
 
 def find_triple(grid, sign):
@@ -15,7 +24,7 @@ def find_triple(grid, sign):
 
 
 def grade(grid) -> int:
-    if find_triple(grid, "*"):
+    if find_triple(grid, "x"):
         return INFINITY
     elif find_triple(grid, "o"):
         return MINUS_INFINITY
@@ -24,14 +33,14 @@ def grade(grid) -> int:
 
 
 def get_sign(player: bool) -> str:
-    return "o" if player else "*"
+    return "o" if player else "x"
 
 
 def print_grid(grid) -> None:
     print()
     for i in range(3):
         for j in range(3):
-            print(grid[3*i + j], end = " ")
+            print(grid[3 * i + j], end=" ")
         print()
     print(grade(grid))
     print()
@@ -46,7 +55,7 @@ class Node:
         self.children = []
 
 
-def build_tree(start_grid:list[int] = empty_grid) -> Node:
+def build_tree(start_grid: list[int] = empty_grid) -> Node:
     node_dict = {}
     root = Node(start_grid)
     queue = deque([root])
@@ -90,15 +99,19 @@ def minmax(node):
     choices = [minmax(c) for c in node.children]
     if node.player == 0:
         max_result = max(c.value for c in choices)
-        max_choices = [i for i in range(len(node.children)) if choices[i].value == max_result]
+        max_choices = [
+            i for i in range(len(node.children)) if choices[i].value == max_result
+        ]
         return Choice(max_choices, aggresivity * max_result)
     else:
         min_result = min(c.value for c in choices)
-        min_choices = [i for i in range(len(node.children)) if choices[i].value == min_result]
+        min_choices = [
+            i for i in range(len(node.children)) if choices[i].value == min_result
+        ]
         return Choice(min_choices, aggresivity * min_result)
 
 
-def play(start_grid = empty_grid):
+def play(start_grid=empty_grid):
     tree = build_tree(start_grid)
     current_node = tree
     while True:
