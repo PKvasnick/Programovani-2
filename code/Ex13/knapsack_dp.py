@@ -1,42 +1,31 @@
-from itertools import product
+# Program for 0-1 Knapsack problem
+# Returns the maximum value that can
+# be put in a knapsack of capacity W
 
 
-W0 = 10
-v0 = [10, 40, 30, 50]
-w0 = [2, 3, 4, 5]
+def knapSack(W, wt, val, n):
+    K = [[0 for x in range(W + 1)] for x in range(n + 1)]
 
-
-def print_matrix(d, colnames, rownames):
-    for s in ["", *colnames]:
-        print(f"{s:5}", end = "")
-    print()
-    for rowname, row in zip(rownames, d):
-        for s in [rowname, *row]:
-            print(f"{s:5}", end = "")
-        print()
-    print()
-
-
-def knapsack_dp(w, v, W):
-    cum_w = list(range(W+1))
-    dp = [[0 for _ in range(len(cum_w))] for _ in range(len(w) + 1)]
-    for row in range(1, len(dp)):
-        w_row = w[row-1]
-        v_row = v[row-1]
-        print(w_row, v_row)
-        for col in range(1, len(cum_w)):
-            W_col = cum_w[col]
-            if w_row > W_col:
-                dp[row][col] = dp[row-1][col]
+    # Build table K[][] in bottom up manner
+    for i in range(n + 1):
+        for w in range(W + 1):
+            if i == 0 or w == 0:
+                K[i][w] = 0
+            elif wt[i - 1] <= w:
+                K[i][w] = max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w])
             else:
-                prev_col = cum_w.index(W_col - w_row)
-                dp[row][col] = max(dp[row-1][col], v_row + dp[row-1][prev_col])
-        print_matrix(dp, cum_w, [0, *w])
-    return
+                K[i][w] = K[i - 1][w]
+
+    return K[n][W], K
 
 
 def main() -> None:
-    knapsack_dp(w0, v0, W0)
+    profit = [60, 100, 120]
+    weight = [10, 20, 30]
+    W = 50
+    maxval, K = knapSack(W, weight, profit, len(profit))
+    print(maxval)
+    print(K)
 
 
 if __name__ == "__main__":
