@@ -9,11 +9,11 @@ class Graph:
     def addEdge(self, u, v):
         self.graph[u].append(v)
 
-    def dfsSort(self, v, visited, stack):
+    def dfs(self, v, visited, stack):
         visited[v] = True
         for i in self.graph[v]:
             if not visited[i]:
-                self.dfsSort(i, visited, stack)
+                self.dfs(i, visited, stack)
         stack.appendleft(v)  # Add to front after exploring
 
     def topologicalSort(self):
@@ -22,7 +22,7 @@ class Graph:
 
         for i in range(self.V):
             if not visited[i]:
-                self.dfsSort(i, visited, stack)
+                self.dfs(i, visited, stack)
 
         print(stack)
 

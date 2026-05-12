@@ -123,6 +123,9 @@ def play(start_grid=empty_grid):
         current_node = current_node.children[select]
 
 
+3
+
+
 def main() -> None:
     start_grid = input().split()
     play(start_grid)
